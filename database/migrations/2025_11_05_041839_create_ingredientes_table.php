@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('ingredientes', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 100);
-            $table->string('unidad_medida', 20);
             $table->foreignId('unidad_medida_id')->constrained('unidades_medida');
-            $table->decimal('stock_minimo', 8, 2); //default 0?
+            $table->decimal('stock_actual', 8, 2)->default(0);
+            $table->decimal('stock_minimo', 8, 2)->default(0);
             $table->decimal('costo_unitario', 8, 2);
             $table->boolean('activo')->default(true);
             $table->timestamps();

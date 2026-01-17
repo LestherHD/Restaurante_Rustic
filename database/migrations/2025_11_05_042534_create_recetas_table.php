@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre', 100);
             $table->integer('version')->nullable()->default(1);
             $table->text('observaciones')->nullable();
-            $table->foreignId('plato_id')->constrained('platos')->onDelete('cascade');
+            $table->foreignId('plato_id')->nullable()->constrained('platos')->onDelete('cascade');
             $table->boolean('estado')->default(true);
             $table->timestamps();
             $table->softDeletes();

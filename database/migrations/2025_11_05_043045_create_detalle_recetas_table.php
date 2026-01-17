@@ -16,8 +16,8 @@ return new class extends Migration
             $table->enum('tipo',['ingrediente','subreceta']);
             $table->decimal('cantidad',8,2);
             $table->foreignId('receta_id')->constrained()->onDelete('cascade');
-            $table->foreignId('ingrediente_id')->constrained()->onDelete('cascade');
-            $table->foreignId('subreceta_id')->constrained('recetas')->onDelete('cascade');
+            $table->foreignId('ingrediente_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('subreceta_id')->nullable()->constrained('recetas')->onDelete('cascade');
             $table->boolean('estado')->default(true);
             $table->timestamps();
             $table->softDeletes();

@@ -8,6 +8,7 @@ use App\Filament\Resources\Permisos\Pages\ListPermisos;
 use App\Filament\Resources\Permisos\Schemas\PermisosForm;
 use App\Filament\Resources\Permisos\Tables\PermisosTable;
 use App\Models\Permisos;
+use App\Traits\HasResourceAuthorization;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,9 +18,12 @@ use UnitEnum;
 
 class PermisosResource extends Resource
 {
+    use HasResourceAuthorization;
+    protected static array $allowedRoles = ['super_admin', 'administrador'];
+
     protected static ?string $model = Permisos::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedKey;
 
     protected static  UnitEnum|string|null $navigationGroup = 'Filament Shield';
 

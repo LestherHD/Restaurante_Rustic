@@ -8,6 +8,7 @@ use App\Filament\Resources\CategoriaMenus\Pages\ListCategoriaMenus;
 use App\Filament\Resources\CategoriaMenus\Schemas\CategoriaMenuForm;
 use App\Filament\Resources\CategoriaMenus\Tables\CategoriaMenusTable;
 use App\Models\CategoriaMenu;
+use App\Traits\HasResourceAuthorization;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,9 +18,12 @@ use UnitEnum;
 
 class CategoriaMenuResource extends Resource
 {
+    use HasResourceAuthorization;
+    protected static array $allowedRoles = ['super_admin', 'administrador', 'gestion_cocina'];
+
     protected static ?string $model = CategoriaMenu::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQueueList;
 
     protected static  UnitEnum|string|null $navigationGroup = 'Menus';
 

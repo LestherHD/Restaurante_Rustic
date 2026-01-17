@@ -12,6 +12,7 @@ class ListUsers extends ListRecords
 
     protected function getHeaderActions(): array
     {
+        // Siempre mostrar el botón - la autorización la maneja el Resource
         return [
             CreateAction::make(),
         ];

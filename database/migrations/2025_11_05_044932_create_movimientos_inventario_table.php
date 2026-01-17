@@ -13,12 +13,17 @@ return new class extends Migration
     {
         Schema::create('movimientos_inventario', function (Blueprint $table) {
             $table->id();
-            $table->enum('tipo_movimiento',['entrada','salida']);
-            $table->decimal('cantidad',8,2);
-            $table->string('referencia_tipo',50)->nullable();
+            
+            // Relacion polimorfica para Bebidas e Ingredientes
+            $table->morphs('inventariable'); // Crea inventariable_id e inventariable_type
+            
+            $table->enum('tipo_movimiento', ['entrada', 'salida', 'ajuste']);
+            $table->decimal('cantidad', 10, 2);
+            $table->string('motivo', 100); // "Compra", "Venta", "Merma", "Ajuste", etc.
             $table->text('comentario')->nullable();
-            $table->date('fecha_movimiento')->nullable();
-            $table->foreignId('ingrediente_id')->constrained('ingredientes')->onDelete('cascade');
+            $table->date('fecha_movimiento');
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            
             $table->timestamps();
             $table->softDeletes();
         });

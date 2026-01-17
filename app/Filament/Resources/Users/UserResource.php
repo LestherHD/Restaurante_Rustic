@@ -10,6 +10,7 @@ use App\Filament\Resources\Users\Schemas\UserForm;
 use App\Filament\Resources\Users\Schemas\UserInfolist;
 use App\Filament\Resources\Users\Tables\UsersTable;
 use App\Models\User;
+use App\Traits\HasResourceAuthorization;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -19,13 +20,24 @@ use UnitEnum;
 
 class UserResource extends Resource
 {
+    use HasResourceAuthorization;
+
     protected static ?string $model = User::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserCircle;
 
     protected static  UnitEnum|string|null $navigationGroup = 'Filament Shield';
 
+    protected static ?string $navigationLabel = 'Usuarios';
+
+    protected static ?string $modelLabel = 'Usuario';
+
+    protected static ?string $pluralModelLabel = 'Usuarios';
+
     protected static ?string $recordTitleAttribute = 'name';
+
+    // Roles permitidos para gestionar usuarios
+    protected static array $allowedRoles = ['super_admin', 'administrador'];
 
     public static function form(Schema $schema): Schema
     {

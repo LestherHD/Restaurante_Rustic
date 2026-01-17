@@ -9,44 +9,52 @@ class UserPolicy
 {
     use HandlesAuthorization;
     
+    /**
+     * Verificar si el usuario tiene alguno de los roles permitidos
+     */
+    protected function hasAdminRole(AuthUser $authUser): bool
+    {
+        return $authUser->hasAnyRole(['super_admin', 'administrador']);
+    }
+    
     public function viewAny(AuthUser $authUser): bool
     {
-        return $authUser->can('ViewAny:User');
+        return $this->hasAdminRole($authUser);
     }
 
     public function view(AuthUser $authUser): bool
     {
-        return $authUser->can('View:User');
+        return $this->hasAdminRole($authUser);
     }
 
     public function create(AuthUser $authUser): bool
     {
-        return $authUser->can('Create:User');
+        return $this->hasAdminRole($authUser);
     }
 
     public function update(AuthUser $authUser): bool
     {
-        return $authUser->can('Update:User');
+        return $this->hasAdminRole($authUser);
     }
 
     public function delete(AuthUser $authUser): bool
     {
-        return $authUser->can('Delete:User');
+        return $this->hasAdminRole($authUser);
     }
 
     public function restore(AuthUser $authUser): bool
     {
-        return $authUser->can('Restore:User');
+        return $this->hasAdminRole($authUser);
     }
 
     public function forceDelete(AuthUser $authUser): bool
     {
-        return $authUser->can('ForceDelete:User');
+        return $this->hasAdminRole($authUser);
     }
 
     public function forceDeleteAny(AuthUser $authUser): bool
     {
-        return $authUser->can('ForceDeleteAny:User');
+        return $this->hasAdminRole($authUser);
     }
 
     public function restoreAny(AuthUser $authUser): bool

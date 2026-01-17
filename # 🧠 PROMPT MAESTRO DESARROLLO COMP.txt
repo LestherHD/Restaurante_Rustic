@@ -1,0 +1,296 @@
+# 🧠 PROMPT MAESTRO: DESARROLLO COMPLETO DE SISTEMA DE RESTAURANTE (LARAVEL + FILAMENT + LIVEWIRE + MYSQL 8)
+
+---
+
+## 🎯 OBJETIVO GENERAL
+
+Quiero que me guíes **paso a paso desde cero** para construir un **sistema de restaurante profesional**, con backend en **Laravel 11**, panel administrativo con **Filament**, interfaz dinámica con **Livewire**, y base de datos en **MySQL 8**.
+
+El sistema debe ser **modular, escalable y mantenible**, cumpliendo las siguientes funciones:
+
+---
+
+## 🍽️ FUNCIONALIDADES DEL SISTEMA
+
+1. **Mapa visual de mesas (front de meseras):**
+   - Mostrar todas las mesas del restaurante en una vista tipo “mapa”.
+   - Cada mesa tiene posición X/Y, estado (libre, ocupada, en atención, cerrada).
+   - Permitir clic en una mesa para:
+     - Crear un nuevo pedido.
+     - Consultar pedidos activos.
+     - Mover un pedido a otra mesa.
+     - Cerrar o cobrar un pedido.
+   - Colores por estado:
+     - 🟩 Libre
+     - 🟨 En atención
+     - 🟥 Ocupada
+
+2. **Módulo de pedidos:**
+   - Crear pedidos asociados a una mesa y una mesera.
+   - Añadir platos al pedido, con cantidad y precio.
+   - Calcular totales automáticamente.
+   - Permitir pausar pedido y retomarlo luego.
+   - Cerrar pedido → generar pago → descontar ingredientes.
+   - Registrar pagos (efectivo, tarjeta, transferencia).
+
+3. **Módulo de platos (menú):**
+   - CRUD de platos con categoría, imagen, descripción y precio.
+   - Cada plato tiene una receta (ingredientes + cantidades + costo).
+   - Mostrar platos en la landing page pública.
+
+4. **Módulo de recetas (manufactura):**
+   - Relacionar cada plato con los ingredientes necesarios.
+   - Guardar cantidad, unidad de medida y costo.
+   - Calcular automáticamente el costo de producción del plato.
+
+5. **Módulo de bodega (inventario):**
+   - CRUD de ingredientes o materias primas.
+   - Control de stock actual, stock mínimo, unidad y costo unitario.
+   - Registrar movimientos (entradas, salidas, ajustes).
+   - **Debe generar automáticamente alertas** cuando:
+     - El stock actual ≤ stock mínimo.
+     - Un ingrediente se agote.
+   - Al vender un plato, se descuentan los ingredientes usados.
+   - Las alertas deben mostrarse en:
+     - Panel administrativo (notificación visual).
+     - Posibilidad de enviarlas por correo o Telegram (a elección futura).
+
+6. **Módulo de usuarios y roles:**
+   - Roles: `admin`, `mesera`, `cocina`.
+   - Admin → control total.
+   - Mesera → acceso a pedidos y mapa de mesas.
+   - Cocina → ver pedidos pendientes y control de recetas.
+   - Implementar autenticación con Laravel Breeze o Jetstream.
+   - Gestión de roles con Spatie Permissions o Policies.
+
+7. **Panel administrativo (Filament):**
+   - Interfaz moderna para administrar:
+     - Platos y categorías.
+     - Ingredientes.
+     - Recetas.
+     - Inventario.
+     - Usuarios.
+     - Mesas.
+     - Reportes.
+   - Incluir dashboards con gráficos:
+     - Ventas por día/mes.
+     - Consumo de ingredientes.
+     - Alertas de inventario bajo.
+
+8. **Landing Page pública:**
+   - Página principal con:
+     - Presentación del restaurante.
+     - Menú visible al público.
+     - Imágenes de platos.
+     - Información de contacto, horarios y ubicación.
+   - Estilo moderno con TailwindCSS.
+
+9. **Reportes:**
+   - Reporte de ventas (por día, mes, usuario).
+   - Reporte de consumo de inventario.
+   - Reporte de costos de producción y márgenes.
+   - Exportar reportes en PDF o Excel.
+
+---
+
+## ⚙️ ETAPA 1 — CONFIGURACIÓN INICIAL DEL ENTORNO
+
+Guíame para instalar y configurar **todo desde cero**, incluyendo:
+
+1. PHP 8.3+  
+2. Composer  
+3. MySQL 8  
+4. Node.js 20+  
+5. NPM o PNPM  
+6. Laravel 11  
+
+Luego, crea el proyecto:
+```bash
+composer create-project laravel/laravel restaurante
+cd restaurante
+php artisan serve
+
+
+
+⚙️ ETAPA 2 — AUTENTICACIÓN Y ROLES
+
+Instalar Laravel Breeze o Jetstream (recomienda cuál es mejor para este caso).
+
+Crear roles base:
+
+admin
+
+mesera
+
+cocina
+
+Instalar y configurar Spatie Laravel Permission.
+
+Crear políticas (Policy) para proteger módulos según el rol.
+
+Implementar vistas de login y dashboard personalizado por rol.
+
+⚙️ ETAPA 3 — INSTALACIÓN DE FILAMENT Y LIVEWIRE
+
+Instalar Filament 3.x:
+
+composer require filament/filament:"^3.0"
+php artisan make:filament-user
+
+
+Crear panel para administración (/admin).
+
+Instalar Livewire 3:
+
+composer require livewire/livewire
+
+
+Instalar TailwindCSS:
+
+npm install -D tailwindcss
+npx tailwindcss init
+npm run dev
+
+
+Configurar componentes Livewire para:
+
+Vista del mapa de mesas (interactiva con estados y colores).
+
+Alertas automáticas de inventario bajo.
+
+Actualización en tiempo real (polling o eventos).
+
+⚙️ ETAPA 4 — CONFIGURACIÓN DE BASE DE DATOS (MySQL 8)
+
+Guíame para importar y/o generar las migraciones basadas en la estructura definida:
+
+users, roles
+
+mesas, pedidos, detalle_pedidos
+
+categorias, platos
+
+ingredientes, movimientos_inventario
+
+recetas, detalle_recetas
+
+pagos, ventas, costos_platos, configuraciones
+
+Incluye:
+
+Índices, claves foráneas y relaciones.
+
+Campos created_at, updated_at, deleted_at.
+
+⚙️ ETAPA 5 — LÓGICA DE INVENTARIO Y ALERTAS
+
+Guíame para implementar el descuento automático de inventario y alertas:
+
+Al cerrar o pagar un pedido:
+
+Buscar los platos en detalle_pedidos.
+
+Obtener su receta y descontar ingredientes del inventario.
+
+Registrar movimiento en movimientos_inventario.
+
+Crear una tarea programada (Scheduler o Command) que:
+
+Revise diariamente los ingredientes.
+
+Si stock_actual <= stock_minimo, genere una alerta.
+
+Registrar alerta en base de datos y notificar al administrador.
+
+Mostrar alertas en el panel Filament:
+
+Banner rojo o tarjeta con “⚠️ Ingrediente con poco stock”.
+
+Posibilidad de ver detalle y reponer manualmente.
+
+Opción adicional (posterior):
+
+Enviar alertas por correo o Telegram.
+
+⚙️ ETAPA 6 — PANEL ADMINISTRATIVO FILAMENT
+
+Crear Resources en Filament para:
+
+PlatosResource
+
+IngredientesResource
+
+RecetasResource
+
+PedidosResource
+
+UsuariosResource
+
+MesasResource
+
+ReportesDashboard
+
+Configurar relaciones:
+
+Platos → Recetas → Ingredientes.
+
+Pedidos → Detalles → Platos.
+
+Añadir formularios con validaciones.
+
+Incluir gráficos (con Filament Charts) para:
+
+Ventas por día/mes.
+
+Stock crítico.
+
+Costos y márgenes.
+
+⚙️ ETAPA 7 — LANDING PAGE (PÚBLICA)
+
+Crear vistas Blade para:
+
+/ (inicio)
+
+/menu
+
+/contacto
+
+Mostrar los platos disponibles (desde platos activos).
+
+Usar TailwindCSS para estilo limpio y moderno.
+
+Opcional: permitir reservas o pedidos en línea (fase futura).
+
+⚙️ ETAPA 8 — REPORTES Y COSTOS
+
+Crear reportes de:
+
+Ventas diarias / mensuales.
+
+Ingredientes más consumidos.
+
+Platos más vendidos.
+
+Costo de producción vs precio de venta.
+
+Permitir exportar a PDF o Excel.
+
+Crear cálculo automático de margen de utilidad.
+
+⚙️ ETAPA 9 — SEGURIDAD Y DESPLIEGUE
+
+Configurar .env seguro.
+
+Añadir HTTPS, CSRF y protección de sesiones.
+
+Configurar backups automáticos de la base de datos.
+
+Preparar para producción:
+
+php artisan config:cache
+php artisan route:cache
+php artisan optimize
+
+
+Guíame para desplegar en un VPS (DigitalOcean, AWS, Hostinger, etc.).
